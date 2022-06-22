@@ -81,10 +81,20 @@ sap.ui.define([
 			}
 		},
 
-		/**
-		 * Lock UI when changing data in the input controls
-		 * @param {sap.ui.base.Event} oEvt - Event data
-		 */
+		onSelectionChange : function (oEvent) {
+			var oDetailArea = this.byId("detailArea"),
+				oLayout = this.byId("defaultLayout"),
+			// get binding of selected item
+				oUserContext = oEvent.getParameters().listItem.getBindingContext();
+
+			// set binding
+			oDetailArea.setBindingContext(oUserContext);
+			// resize view
+			oDetailArea.setVisible(true);
+			oLayout.setSize("60%");
+			oLayout.setResizable(true);
+		},
+
 		onInputChange : function (oEvt) {
 			if (oEvt.getParameter("escPressed")) {
 				this._setUIChanges();

@@ -2,7 +2,11 @@
 	controllerName="sap.ui.core.tutorial.odatav4.controller.App"
 	displayBlock="true"
 	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc">
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:l="sap.ui.layout"
+	xmlns:semantic="sap.f.semantic"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
 	<Shell id="_IDGenShell1">
 		<App id="_IDGenApp1" busy="{appView>/busy}" class="sapUiSizeCompact">
 			<pages>
@@ -17,102 +21,232 @@
 						</Button>
 					</headerContent>
 					<content>
-						<Table
-							id="peopleList"
-							growing="true"
-							growingThreshold="10"
-							items="{
-								path: '/People',
-								parameters: {
-									$count: true,
-									$$updateGroupId : 'peopleGroup'
-								}
-							}"
-							mode="SingleSelectLeft">
-							<headerToolbar>
-								<OverflowToolbar id="_IDGenOverflowToolbar1">
-									<content>
-										<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
-										<SearchField
-											id="searchField"
-											width="20%"
-											placeholder="{i18n>searchFieldPlaceholder}"
-											enabled="{= !${appView>/hasUIChanges}}"
-											search=".onSearch"/>
-										<Button
-											id="addUserButton"
-											icon="sap-icon://add"
-											tooltip="{i18n>createButtonText}"
-											press=".onCreate">
-											<layoutData>
-												<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
-											</layoutData>
-										</Button>
-										<Button
-											id="deleteUserButton"
-											icon="sap-icon://delete"
-											tooltip="{i18n>deleteButtonText}"
-											press=".onDelete">
-											<layoutData>
-												<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData2" priority="NeverOverflow"/>
-											</layoutData>
-										</Button>
-										<Button
-											id="refreshUsersButton"
-											icon="sap-icon://refresh"
-											enabled="{= !${appView>/hasUIChanges}}"
-											tooltip="{i18n>refreshButtonText}"
-											press=".onRefresh"/>
-										<Button
-											id="sortUsersButton"
-											icon="sap-icon://sort"
-											enabled="{= !${appView>/hasUIChanges}}"
-											tooltip="{i18n>sortButtonText}"
-											press=".onSort"/>
-									</content>
-								</OverflowToolbar>
-							</headerToolbar>
-							<columns>
-								<Column id="userNameColumn">
-									<Text id="_IDGenText1" text="{i18n>userNameLabelText}"/>
-								</Column>
-								<Column id="firstNameColumn">
-									<Text id="_IDGenText2" text="{i18n>firstNameLabelText}"/>
-								</Column>
-								<Column id="lastNameColumn">
-									<Text id="_IDGenText3" text="{i18n>lastNameLabelText}"/>
-								</Column>
-								<Column id="ageColumn">
-									<Text id="_IDGenText4" text="{i18n>ageLabelText}"/>
-								</Column>
-							</columns>
-							<items>
-								<ColumnListItem id="_IDGenColumnListItem1">
-									<cells>
-										<Input id="_IDGenInput1"
-											value="{UserName}"
-											valueLiveUpdate="true"
-											liveChange=".onInputChange"/>
-									</cells>
-									<cells>
-										<Input id="_IDGenInput2"
-											value="{FirstName}"
-											liveChange=".onInputChange"/>
-									</cells>
-									<cells>
-										<Input id="_IDGenInput3"
-											value="{LastName}"
-											liveChange=".onInputChange"/>
-									</cells>
-									<cells>
-										<Input id="_IDGenInput4"
-											value="{Age}"
-											valueLiveUpdate="true"
-											liveChange=".onInputChange"/>
-									</cells>
-								</ColumnListItem>
-							</items>
-						</Table>
+						<l:ResponsiveSplitter id="_IDGenResponsiveSplitter1" defaultPane="defaultPane">
+							<l:PaneContainer id="_IDGenPaneContainer1" orientation="Horizontal">
+								<l:SplitPane id="defaultPane">
+									<l:layoutData>
+										<l:SplitterLayoutData id="defaultLayout" size="100%" resizable="false"/>
+									</l:layoutData>
+									<Table
+										id="peopleList"
+										growing="true"
+										growingThreshold="10"
+										items="{
+											path: '/People',
+											parameters: {
+												$count: true,
+												$$updateGroupId : 'peopleGroup'
+											}
+										}"
+										mode="SingleSelectLeft"
+										selectionChange=".onSelectionChange">
+										<headerToolbar>
+											<OverflowToolbar id="_IDGenOverflowToolbar1">
+												<content>
+													<ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+													<SearchField
+														id="searchField"
+														width="20%"
+														placeholder="{i18n>searchFieldPlaceholder}"
+														enabled="{= !${appView>/hasUIChanges}}"
+														search=".onSearch"/>
+													<Button
+														id="addUserButton"
+														icon="sap-icon://add"
+														tooltip="{i18n>createButtonText}"
+														press=".onCreate">
+														<layoutData>
+															<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData1" priority="NeverOverflow"/>
+														</layoutData>
+													</Button>
+													<Button
+														id="deleteUserButton"
+														icon="sap-icon://delete"
+														tooltip="{i18n>deleteButtonText}"
+														press=".onDelete">
+														<layoutData>
+															<OverflowToolbarLayoutData id="_IDGenOverflowToolbarLayoutData2" priority="NeverOverflow"/>
+														</layoutData>
+													</Button>
+													<Button
+														id="refreshUsersButton"
+														icon="sap-icon://refresh"
+														enabled="{= !${appView>/hasUIChanges}}"
+														tooltip="{i18n>refreshButtonText}"
+														press=".onRefresh"/>
+													<Button
+														id="sortUsersButton"
+														icon="sap-icon://sort"
+														enabled="{= !${appView>/hasUIChanges}}"
+														tooltip="{i18n>sortButtonText}"
+														press=".onSort"/>
+												</content>
+											</OverflowToolbar>
+										</headerToolbar>
+										<columns>
+											<Column id="userNameColumn">
+												<Text id="_IDGenText1" text="{i18n>userNameLabelText}"/>
+											</Column>
+											<Column id="firstNameColumn">
+												<Text id="_IDGenText2" text="{i18n>firstNameLabelText}"/>
+											</Column>
+											<Column id="lastNameColumn">
+												<Text id="_IDGenText3" text="{i18n>lastNameLabelText}"/>
+											</Column>
+											<Column id="ageColumn">
+												<Text id="_IDGenText4" text="{i18n>ageLabelText}"/>
+											</Column>
+										</columns>
+										<items>
+											<ColumnListItem id="_IDGenColumnListItem1">
+												<cells>
+													<Input id="_IDGenInput1"
+														value="{UserName}"
+														valueLiveUpdate="true"
+														liveChange=".onInputChange"/>
+												</cells>
+												<cells>
+													<Input id="_IDGenInput2"
+														value="{FirstName}"
+														liveChange=".onInputChange"/>
+												</cells>
+												<cells>
+													<Input id="_IDGenInput3"
+														value="{LastName}"
+														liveChange=".onInputChange"/>
+												</cells>
+												<cells>
+													<Input id="_IDGenInput4"
+														value="{Age}"
+														valueLiveUpdate="true"
+														liveChange=".onInputChange"/>
+												</cells>
+											</ColumnListItem>
+										</items>
+									</Table>
+								</l:SplitPane>
+								<l:SplitPane id="_IDGenSplitPane1">
+									<!--Details-->
+									<!--remove busy-->
+									<semantic:SemanticPage
+										id="detailArea"
+										visible="false">
+										<semantic:titleHeading>
+											<Title id="_IDGenTitle1"
+												text="{FirstName} {LastName}"
+												level="H2"/>
+										</semantic:titleHeading>
+										<semantic:headerContent>
+												<FlexBox id="_IDGenFlexBox1">
+													<VBox id="_IDGenVBox1">
+														<ObjectAttribute id="_IDGenObjectAttribute1" text="{i18n>userNameLabelText}"/>
+														<ObjectAttribute id="_IDGenObjectAttribute2" text="{UserName}"/>
+													</VBox>
+													<VBox id="_IDGenVBox2" class="sapUiMediumMarginBegin">
+														<ObjectAttribute id="_IDGenObjectAttribute3" text="{i18n>ageLabelText}"/>
+														<ObjectNumber id="_IDGenObjectNumber1" number="{Age}" numberUnit="Years"/>
+													</VBox>
+												</FlexBox>
+										</semantic:headerContent>
+										<semantic:content>
+											<VBox id="_IDGenVBox3">
+												<FlexBox id="_IDGenFlexBox2" wrap="Wrap">
+													<f:Form id="_IDGenForm1"	editable="false">
+														<f:title>
+															<core:Title id="_IDGenTitle2" text="{i18n>addressTitleText}" />
+														</f:title>
+														<f:layout>
+															<f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout1"
+																labelSpanXL="3"
+																labelSpanL="3"
+																labelSpanM="3"
+																labelSpanS="12"
+																adjustLabelSpan="false"
+																emptySpanXL="4"
+																emptySpanL="4"
+																emptySpanM="4"
+																emptySpanS="0"
+																columnsXL="1"
+																columnsL="1"
+																columnsM="1"
+																singleContainerFullSize="false" />
+														</f:layout>
+														<f:formContainers>
+															<f:FormContainer id="_IDGenFormContainer1">
+																<f:formElements>
+																	<f:FormElement id="_IDGenFormElement1" label="{i18n>addressLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText5" text="{HomeAddress/Address}" />
+																		</f:fields>
+																	</f:FormElement>
+																	<f:FormElement id="_IDGenFormElement2" label="{i18n>cityLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText6" text="{HomeAddress/City/Name}" />
+																		</f:fields>
+																	</f:FormElement>
+																	<f:FormElement id="_IDGenFormElement3" label="{i18n>regionLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText7" text="{HomeAddress/City/Region}" />
+																		</f:fields>
+																	</f:FormElement>
+																	<f:FormElement id="_IDGenFormElement4" label="{i18n>countryLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText8" text="{HomeAddress/City/CountryRegion}" />
+																		</f:fields>
+																	</f:FormElement>
+																</f:formElements>
+															</f:FormContainer>
+														</f:formContainers>
+													</f:Form>
+													<f:Form id="_IDGenForm2"	editable="false">
+														<f:title>
+															<core:Title id="_IDGenTitle3" text="{i18n>bestFriendTitleText}" />
+														</f:title>
+														<f:layout>
+															<f:ResponsiveGridLayout id="_IDGenResponsiveGridLayout2"
+																labelSpanXL="3"
+																labelSpanL="3"
+																labelSpanM="3"
+																labelSpanS="12"
+																adjustLabelSpan="false"
+																emptySpanXL="4"
+																emptySpanL="4"
+																emptySpanM="4"
+																emptySpanS="0"
+																columnsXL="1"
+																columnsL="1"
+																columnsM="1"
+																singleContainerFullSize="false" />
+														</f:layout>
+														<f:formContainers>
+															<f:FormContainer id="_IDGenFormContainer2">
+																<f:formElements>
+																	<f:FormElement id="_IDGenFormElement5" label="{i18n>nameLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText9" text="{BestFriend/FirstName} {BestFriend/LastName}" />
+																		</f:fields>
+																	</f:FormElement>
+																	<f:FormElement id="_IDGenFormElement6" label="{i18n>ageLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText10" text="{BestFriend/Age}" />
+																		</f:fields>
+																	</f:FormElement>
+																	<f:FormElement id="_IDGenFormElement7" label="{i18n>userNameLabelText}">
+																		<f:fields>
+																			<Text id="_IDGenText11" text="{BestFriend/UserName}" />
+																		</f:fields>
+																	</f:FormElement>
+																</f:formElements>
+															</f:FormContainer>
+														</f:formContainers>
+													</f:Form>
+												</FlexBox>
+											</VBox>
+										</semantic:content>
+									</semantic:SemanticPage>
+								</l:SplitPane>
+							</l:PaneContainer>
+						</l:ResponsiveSplitter>
 					</content>
 					<footer>
 						<Toolbar id="_IDGenToolbar1" visible="{appView>/hasUIChanges}">
