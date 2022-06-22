@@ -66,6 +66,18 @@ sap.ui.define([
 			});
 		},
 
+		onDelete : function () {
+			var oSelected = this.byId("peopleList").getSelectedItem();
+
+			if (oSelected) {
+				oSelected.getBindingContext().delete("$auto").then(function () {
+					MessageToast.show(this._getText("deletionSuccessMessage"));
+				}.bind(this), function (oError) {
+					MessageBox.error(oError.message);
+				});
+			}
+		},
+        
 		/**
 		 * Lock UI when changing data in the input controls
 		 * @param {sap.ui.base.Event} oEvt - Event data
