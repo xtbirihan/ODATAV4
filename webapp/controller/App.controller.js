@@ -33,15 +33,18 @@ sap.ui.define([
 			this._bTechnicalErrors = false;
 		},
 
+        onResetDataSource : function () {
+			var oModel = this.getView().getModel(),
+				oOperation = oModel.bindContext("/ResetDataSource(...)");
 
-		/* =========================================================== */
-		/*           begin: event handlers                             */
-		/* =========================================================== */
-
-
-		/**
-		 * Create a new entry.
-		 */
+			oOperation.execute().then(function () {
+					oModel.refresh();
+					MessageToast.show(this._getText("sourceResetSuccessMessage"));
+				}.bind(this), function (oError) {
+					MessageBox.error(oError.message);
+				}
+			);
+		},
 		onCreate : function () {
 			var oList = this.byId("peopleList"),
 				oBinding = oList.getBinding("items"),
@@ -77,7 +80,7 @@ sap.ui.define([
 				});
 			}
 		},
-        
+
 		/**
 		 * Lock UI when changing data in the input controls
 		 * @param {sap.ui.base.Event} oEvt - Event data
