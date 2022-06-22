@@ -1,5 +1,5 @@
 {
-  "_version": "1.40.0",
+  "_version": "1.21.0",
   "sap.app": {
     "id": "sap.ui.core.tutorial.odatav4",
     "type": "application",
